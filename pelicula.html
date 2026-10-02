@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Película · LaCaja</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="page-pelicula">
+
+    <video autoplay muted loop playsinline id="video-fondo" aria-hidden="true">
+        <source src="fondo1.mp4" type="video/mp4">
+    </video>
+    <div class="overlay"></div>
+
+    <header class="navbar">
+        <a class="logo" href="index.html">La<span>Caja</span></a>
+
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menú">
+            <span></span><span></span><span></span>
+        </button>
+
+        <div class="nav-menu" id="menu">
+            <nav aria-label="Principal">
+                <ul class="nav-links">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="index.html#catalogo" aria-current="page">Catálogo</a></li>
+                    <li><a href="#">Listas</a></li>
+                    <li><a href="#">Reseñas</a></li>
+                    <li><a href="#">Comunidad</a></li>
+                </ul>
+            </nav>
+
+            <form class="nav-search" action="index.html#catalogo" method="get" role="search">
+                <input type="search" name="q" placeholder="Buscar película o director" aria-label="Buscar película o director">
+            </form>
+
+            <div class="nav-actions">
+                <a class="btn btn-ghost btn-sm" href="#">Iniciar sesión</a>
+                <a class="btn btn-primary btn-sm" href="#">Crear cuenta</a>
+            </div>
+        </div>
+    </header>
+
+    <!--
+        PLANTILLA DE PELÍCULA
+        Esta misma página sirve para todas las películas: se abre como
+        pelicula.html?id=el-padrino y pelicula.js rellena cada campo
+        con los datos de app.js. Puedes editar el diseño libremente,
+        solo conserva los id="p-..." para que se siga llenando.
+    -->
+    <main class="movie" id="pelicula">
+
+        <!-- Columna izquierda: póster y acciones -->
+        <aside class="movie-side">
+            <div class="poster movie-poster" id="p-poster"></div>
+
+            <div class="side-actions">
+                <button class="action-btn" type="button" data-accion="visto" aria-pressed="false">
+                    <span class="ic" aria-hidden="true">✓</span> Vista
+                </button>
+                <button class="action-btn" type="button" data-accion="like" aria-pressed="false">
+                    <span class="ic" aria-hidden="true">♥</span> Me gusta
+                </button>
+                <button class="action-btn" type="button" data-accion="pendiente" aria-pressed="false">
+                    <span class="ic" aria-hidden="true">+</span> Ver después
+                </button>
+            </div>
+        </aside>
+
+        <!-- Columna derecha: información -->
+        <div class="movie-main">
+
+            <header class="movie-head">
+                <h1 id="p-titulo">Título de la película</h1>
+                <p class="movie-director">Dirigida por <strong id="p-director">Director</strong></p>
+
+                <ul class="meta-row">
+                    <li id="p-anio">Año</li>
+                    <li id="p-duracion">Duración</li>
+                    <li id="p-pais">País</li>
+                </ul>
+
+                <ul class="tags" id="p-generos" aria-label="Géneros"></ul>
+            </header>
+
+            <!-- Valoración de la comunidad -->
+            <section class="rating-panel" aria-label="Valoración de la comunidad">
+                <div class="rating-score">
+                    <span class="score" id="p-nota">0.0</span>
+                    <span class="stars stars-lg" id="p-stars" aria-hidden="true">★★★★★</span>
+                    <span class="score-votes" id="p-votos"></span>
+                </div>
+                <div class="hist" id="p-histograma" aria-label="Distribución de valoraciones"></div>
+            </section>
+
+            <section class="block" aria-labelledby="h-sinopsis">
+                <h2 id="h-sinopsis">Sinopsis</h2>
+                <p class="synopsis" id="p-sinopsis"></p>
+            </section>
+
+            <section class="block" aria-labelledby="h-ficha">
+                <h2 id="h-ficha">Ficha técnica</h2>
+                <dl class="facts" id="p-ficha"></dl>
+            </section>
+
+            <section class="block" aria-labelledby="h-reparto">
+                <h2 id="h-reparto">Reparto principal</h2>
+                <ul class="tags tags-cast" id="p-reparto"></ul>
+            </section>
+
+            <!-- Reseñas -->
+            <section class="block" aria-labelledby="h-resenas">
+                <h2 id="h-resenas">Reseñas <span class="count" id="p-num-resenas"></span></h2>
+
+                <form class="review-form" id="form-resena">
+                    <label class="field-label" for="texto-resena">Escribe tu reseña</label>
+                    <textarea id="texto-resena" name="texto" rows="4" maxlength="1200" placeholder="¿Qué te pareció? Cuéntalo sin spoilers, o márcalo al inicio si los hay." required></textarea>
+
+                    <div class="review-form-row">
+                        <div class="rate">
+                            <span class="field-label" id="lbl-rating">Tu calificación</span>
+                            <div class="star-input" role="radiogroup" aria-labelledby="lbl-rating">
+                                <input type="radio" id="s5" name="rating" value="5"><label for="s5" title="5 estrellas">★</label>
+                                <input type="radio" id="s4" name="rating" value="4"><label for="s4" title="4 estrellas">★</label>
+                                <input type="radio" id="s3" name="rating" value="3"><label for="s3" title="3 estrellas">★</label>
+                                <input type="radio" id="s2" name="rating" value="2"><label for="s2" title="2 estrellas">★</label>
+                                <input type="radio" id="s1" name="rating" value="1"><label for="s1" title="1 estrella">★</label>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Publicar reseña</button>
+                    </div>
+                </form>
+
+                <div class="reviews" id="p-resenas"></div>
+            </section>
+
+            <!-- Similares -->
+            <section class="block" aria-labelledby="h-similares">
+                <h2 id="h-similares">Si te gustó esta, prueba con</h2>
+                <div class="grid grid-sm" id="p-similares"></div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>LaCaja, un foro para quienes viven pegados a la pantalla.</p>
+        <ul>
+            <li><a href="#">Normas de la comunidad</a></li>
+            <li><a href="#">Contacto</a></li>
+        </ul>
+    </footer>
+
+    <script src="app.js"></script>
+    <script src="pelicula.js"></script>
+</body>
+</html>

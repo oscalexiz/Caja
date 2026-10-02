@@ -1,34 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INICIO</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>LaCaja · Foro de cine</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <video autoplay muted loop id="video-fondo">
-    <source src="fondo1.mp4" type="video/mp4">
+    <!-- Fondo -->
+    <video autoplay muted loop playsinline id="video-fondo" aria-hidden="true">
+        <source src="fondo1.mp4" type="video/mp4">
     </video>
+    <div class="overlay"></div>
 
-<div class="overlay"></div>
+    <!-- Barra de navegación -->
+    <header class="navbar">
+        <a class="logo" href="index.html">La<span>Caja</span></a>
 
- <nav class="navbar">
-    <h1>LaCaja</h1>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menú">
+            <span></span><span></span><span></span>
+        </button>
 
-    <ul>
-        <li><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-    </ul>
-</nav>
+        <div class="nav-menu" id="menu">
+            <nav aria-label="Principal">
+                <ul class="nav-links">
+                    <li><a href="index.html" aria-current="page">Inicio</a></li>
+                    <li><a href="index.html#catalogo">Catálogo</a></li>
+                    <li><a href="#">Listas</a></li>
+                    <li><a href="#">Reseñas</a></li>
+                    <li><a href="#">Comunidad</a></li>
+                </ul>
+            </nav>
 
-    
-    
+            <form class="nav-search" action="index.html#catalogo" method="get" role="search">
+                <input type="search" name="q" placeholder="Buscar película o director" aria-label="Buscar película o director">
+            </form>
+
+            <div class="nav-actions">
+                <a class="btn btn-ghost btn-sm" href="#">Iniciar sesión</a>
+                <a class="btn btn-primary btn-sm" href="#">Crear cuenta</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- Portada -->
+        <section class="hero">
+            <h1>Tu diario de cine, con buena compañía</h1>
+            <p>Registra lo que ves, escribe reseñas y descubre qué piensa la comunidad de cada película.</p>
+            <div class="hero-actions">
+                <a class="btn btn-primary" href="#catalogo">Explorar el catálogo</a>
+                <a class="btn btn-ghost" href="#">Crear cuenta</a>
+            </div>
+        </section>
+
+        <!-- Catálogo -->
+        <section class="section" id="catalogo" aria-labelledby="catalogo-titulo">
+            <div class="section-head">
+                <div>
+                    <h2 id="catalogo-titulo">Catálogo</h2>
+                    <p class="section-sub" id="contador" aria-live="polite"></p>
+                </div>
+
+                <label class="sort">
+                    Ordenar por
+                    <select id="orden">
+                        <option value="nota">Mejor valoradas</option>
+                        <option value="reciente">Más recientes</option>
+                        <option value="titulo">Título (A a Z)</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="filters" id="filtros" role="group" aria-label="Filtrar por género"></div>
+
+            <div class="grid" id="catalogo-grid"></div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>LaCaja, un foro para quienes viven pegados a la pantalla.</p>
+        <ul>
+            <li><a href="#">Normas de la comunidad</a></li>
+            <li><a href="#">Contacto</a></li>
+        </ul>
+    </footer>
+
+    <script src="app.js"></script>
+    <script src="catalogo.js"></script>
 </body>
 </html>
